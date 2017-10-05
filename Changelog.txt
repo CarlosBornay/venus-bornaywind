@@ -36,3 +36,5 @@ v.1.4.1: Correction of the error that makes the serial libraries does not work a
 v.1.4.2: Correction of minor errors and change all the name variables to english.
 
 v.1.5.0: Changes to adapt the code to use the serial-starter of victron. modify the paths of vebus. Added the parser serial port argument.
+
+v.1.5.1: Correction of minor errors.
