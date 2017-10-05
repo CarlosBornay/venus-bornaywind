@@ -1,0 +1,38 @@
+Changes in the version:
+
+V1.0.0: Implementation of Bornay modbus system in windows and linux.
+
+V1.1.0: Added the port scanning system and reconnection system in fail case.
+
+v1.1.1: Script with double function:
+	1. Works with a raspberry pi: Wind+ Online monitor.
+	2. Works with a ColorControl GX with the dbus protocol.
+
+v1.1.2: Added dbus protocol to transfer the wind + data to victron servers.
+
+v1.1.3: Added mysql class to works in a network.
+
+v1.2.0: Added the reconnection to the mysql base in fail case.
+
+v.1.2.1: Added json class to build the oauth2 packet.
+
+v.1.2.2: Added filesystem class to local monitoring. Mysql class deleted.
+
+v.1.3.0: Added oaut2 protocol with json data.
+
+v.1.3.1: Correction of minor errors:
+	 1. Correction of the coma when saves the data.
+	 2. Remove the data when saves the data.
+
+v.1.3.2: Added modbus tcp to comunicate with the CCGX. Oauth2 protocol removed.
+Correct the error with vebus when reboots the script.
+
+v.1.3.3: Corrected the format save of txt files. Actual format (month_day_year).
+
+v.1.4.0: Added the read and write method by modbus tcp. Manual ip needs to be introduced.
+
+v.1.4.1: Correction of the error that makes the serial libraries does not work at the same time with the modbus tcp libraries.
+
+v.1.4.2: Correction of minor errors and change all the name variables to english.
+
+v.1.5.0: Changes to adapt the code to use the serial-starter of victron. modify the paths of vebus. Added the parser serial port argument.
