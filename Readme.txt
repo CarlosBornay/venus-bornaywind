@@ -6,6 +6,6 @@ The script tries to connect through modbus rtu to a ColorControl device with a s
 
 Unzip the ext folder to get the different libraries that are used.
 
-Version of the app: 1.5.0
+Version of the app: 1.5.1
 
 
