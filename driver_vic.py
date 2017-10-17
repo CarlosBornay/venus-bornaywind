@@ -161,7 +161,6 @@ class modbus():
 class VBus():
 	def __init__(self):
 		self.dbusservice = None	#dbus service variable
-		self.value_modbus = "" 	#values read from bornay wind+ modbus
 		self.args = ""		#extract parse argument
 		self.init_on = 0		#variable to init the vebus service
 
@@ -287,38 +286,38 @@ class VBus():
 	# RETURNS:
 	#   Nothing
 	#-----------------------------------------------------------------------------
-	def update_modbus_values(self):
-		self.dbusservice['/Mppt/StatusMEF'] = self.value_modbus[0]
-		self.dbusservice['/Mppt/RefMEF'] = self.value_modbus[1]
-		self.dbusservice['/Turbine/BatPowerLastMin'] = self.value_modbus[2]
-		self.dbusservice['/Turbine/BatPowerLastHour'] = self.value_modbus[3]
-		self.dbusservice['/Turbine/BreakerPowerLastMin'] = self.value_modbus[4]
-		self.dbusservice['/Turbine/WindSpeedLastMin'] = self.value_modbus[5]
-		self.dbusservice['/Turbine/WindSpeedLastHour'] = self.value_modbus[6]
-		self.dbusservice['/Mppt/Phase'] = self.value_modbus[7]
-		self.dbusservice['/Mppt/SinkTemp'] = (self.value_modbus[8]/10)
-		self.dbusservice['/Mppt/BoxTemp'] = (self.value_modbus[9]/10)
-		self.dbusservice['/Flags/ElevatedVoltaje'] = self.value_modbus[10]
-		self.dbusservice['/Flags/Extrem'] = self.value_modbus[11]
-		self.dbusservice['/Flags/ExternSupply'] = self.value_modbus[12]
-		self.dbusservice['/Flags/ElevatedWind'] = self.value_modbus[13]
-		self.dbusservice['/Flags/FanState'] = self.value_modbus[14]
-		self.dbusservice['/Flags/EmergencyButton'] = self.value_modbus[15]
-		self.dbusservice['/Turbine/RPM'] = self.value_modbus[16]
-		self.dbusservice['/History/Overall/MaxRPM'] = self.value_modbus[17]
-		self.dbusservice['/Mppt/Dutty'] = self.value_modbus[18]
-		self.dbusservice['/Turbine/WindSpeed'] = (self.value_modbus[19]/100)
-		self.dbusservice['/Turbine/VDC'] = (self.value_modbus[20]/10)
-		self.dbusservice['/Dc/0/Current'] = (self.value_modbus[21]/10)
-		self.dbusservice['/Turbine/IBrk'] = (self.value_modbus[22]/10)
-		self.dbusservice['/Dc/0/Power'] = self.value_modbus[23]
-		self.dbusservice['/Turbine/AvailablePower'] = self.value_modbus[24]
-		self.dbusservice['/Turbine/Stop'] = self.value_modbus[25]
-		self.dbusservice['/Dc/0/Voltage'] = (self.value_modbus[26]/10)
-		self.dbusservice['/Mppt/ChargerState'] = self.value_modbus[27]
-		self.dbusservice['/Turbine/StimatedWind'] = (self.value_modbus[28]/10)
-		self.dbusservice['/Flags/ChargedBattery'] = self.value_modbus[29]
-		self.dbusservice['/Mppt/AbsortionTime'] = self.value_modbus[30]
+	def update_modbus_values(self, value_modbus):
+		self.dbusservice['/Mppt/StatusMEF'] = value_modbus[0]
+		self.dbusservice['/Mppt/RefMEF'] = value_modbus[1]
+		self.dbusservice['/Turbine/BatPowerLastMin'] = value_modbus[2]
+		self.dbusservice['/Turbine/BatPowerLastHour'] = value_modbus[3]
+		self.dbusservice['/Turbine/BreakerPowerLastMin'] = value_modbus[4]
+		self.dbusservice['/Turbine/WindSpeedLastMin'] = value_modbus[5]
+		self.dbusservice['/Turbine/WindSpeedLastHour'] = value_modbus[6]
+		self.dbusservice['/Mppt/Phase'] = value_modbus[7]
+		self.dbusservice['/Mppt/SinkTemp'] = (value_modbus[8]/10)
+		self.dbusservice['/Mppt/BoxTemp'] = (value_modbus[9]/10)
+		self.dbusservice['/Flags/ElevatedVoltaje'] = value_modbus[10]
+		self.dbusservice['/Flags/Extrem'] = value_modbus[11]
+		self.dbusservice['/Flags/ExternSupply'] = value_modbus[12]
+		self.dbusservice['/Flags/ElevatedWind'] = value_modbus[13]
+		self.dbusservice['/Flags/FanState'] = value_modbus[14]
+		self.dbusservice['/Flags/EmergencyButton'] = value_modbus[15]
+		self.dbusservice['/Turbine/RPM'] = value_modbus[16]
+		self.dbusservice['/History/Overall/MaxRPM'] = value_modbus[17]
+		self.dbusservice['/Mppt/Dutty'] = value_modbus[18]
+		self.dbusservice['/Turbine/WindSpeed'] = (value_modbus[19]/100)
+		self.dbusservice['/Turbine/VDC'] = (value_modbus[20]/10)
+		self.dbusservice['/Dc/0/Current'] = (value_modbus[21]/10)
+		self.dbusservice['/Turbine/IBrk'] = (value_modbus[22]/10)
+		self.dbusservice['/Dc/0/Power'] = value_modbus[23]
+		self.dbusservice['/Turbine/AvailablePower'] = value_modbus[24]
+		self.dbusservice['/Turbine/Stop'] = value_modbus[25]
+		self.dbusservice['/Dc/0/Voltage'] = (value_modbus[26]/10)
+		self.dbusservice['/Mppt/ChargerState'] = value_modbus[27]
+		self.dbusservice['/Turbine/StimatedWind'] = (value_modbus[28]/10)
+		self.dbusservice['/Flags/ChargedBattery'] = value_modbus[29]
+		self.dbusservice['/Mppt/AbsortionTime'] = value_modbus[30]
 		pass
 
 
@@ -363,8 +362,8 @@ if __name__ == '__main__':
 					ve.Init() #init the vebus config and directories
 					ve.init_on = 1
 				s.conect_error = 0 #sets the error count to zero
-				ve.value_modbus = s.read_result #transfer modbus data read to ve variable
-				ve.update_modbus_values()
+				value_modbus = s.read_result #transfer modbus data read to ve variable
+				ve.update_modbus_values(value_modbus)
 				mainloop = gobject.MainLoop()
 				#mainloop.run()
 				time.sleep(s.delay) #delay to not collapse the dbus
