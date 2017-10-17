@@ -151,16 +151,16 @@ class modbus():
 		try:
 			print("Read holding registers")
 			self.read_result = self.instrument.read_holding_registers(inicial_register, number_registrers, unit=self.direction_sel) # try to read 
-			print("Readed")
+			print("Done")
 			return self.read_result.registers # Return the register read
 		except: # if it has an exception
 			self.read_result = "error"
 			return self.read_result # Returns erros to indicate an error comunication
 			
 # vbus class
-class vbus():
+class VBus():
 	dbusservice = None	#dbus service variable
-	value_modbus = "" 	#values readed from bornay wind+ modbus
+	value_modbus = "" 	#values read from bornay wind+ modbus
 	parser = ""	  	#add parser to put a serial port argument
 	args = ""		#extract parse argument
 	init_on = 0		#variable to init the vebus service
@@ -329,7 +329,7 @@ if __name__ == '__main__':
 	systemtype = system_type(ccgx_rasp[1]) #sets a ccgx system
 	#init the different class of the script
 	s = modbus() # starts modbus class
-	ve = vbus() #init vbus class
+	ve = VBus() #init vbus class
 	ve.parser_arguments() #saves the parser arguments
 	s.Port_sel = ve.args.Bornay_serial #gets the serial port argument
 	#config the serial comunication
@@ -363,7 +363,7 @@ if __name__ == '__main__':
 					ve.Init() #init the vebus config and directories
 					ve.init_on = 1
 				s.conect_error = 0 #sets the error count to zero
-				ve.value_modbus = s.read_result #transfer modbus data readed to ve variable
+				ve.value_modbus = s.read_result #transfer modbus data read to ve variable
 				ve.update_modbus_values()
 				mainloop = gobject.MainLoop()
 				#mainloop.run()
