@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 
-'''#--------------------------------------------------------------------------------
-# Script to develop a modbus tcp communication to a ColorControl device with 
+#--------------------------------------------------------------------------------
+# Script to develop a modbus tcp communication to a ColorControl device with
 # the Bornay aerogeneradores MPPT wind+.
 # Author: Carlos Reyes Guerola
 # date: 21/04/2017
 # last update: 05/10/2017
 # Version: 1.5.1
-#---------------------------------------------------------------------------------'''
+#---------------------------------------------------------------------------------
 softwareVersion = '1.5.1'
 
 from dbus.mainloop.glib import DBusGMainLoop
@@ -31,7 +31,7 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/importlib-1.0.
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/pyserial-3.3'))
 import serial
 import serial.rs485
-																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																																								
+
 #importing modbus complements for the rs485 communicaction
 from pymodbus.exceptions import ModbusException, ParameterException
 from pymodbus.pdu import ExceptionResponse, ModbusRequest
@@ -45,7 +45,7 @@ import logging
 logging.basicConfig()
 log = logging.getLogger()
 log.setLevel(logging.DEBUG)
-		
+
 
 # importing dbus complements
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/velib_python'))
@@ -58,7 +58,7 @@ systemtype = "" #determines the system operation
 # Sets the type of system (CCGX or rasp) to get permissions
 # ENTRIES:
 # systype: an integer who sets the system type
-# RETURNS: 
+# RETURNS:
 # the type of system
 #-----------------------------------------------------------------------------
 def system_type(systype):
@@ -79,21 +79,21 @@ class modbus():
 	read_result = ""				# Reading exit
 	delay = 1					# Delay between pols (in seconds)
 	connected = 0					# If the port is connected or not
-	conect_error = 0				# variable to controls the connection error 
-			
+	conect_error = 0				# variable to controls the connection error
 
-	'''#-----------------------------------------------------------------------------
-	# Starts the modbus connection. 
+
+	#-----------------------------------------------------------------------------
+	# Starts the modbus connection.
 	# ENTRIES:
 	#   -port : port selected
 	#	-delay : delay between pols
-	# RETURNS: 
+	# RETURNS:
 	# 	Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def init(self, port, delay):
 		try:
 			self.instrument = ModbusClient(method='rtu', port=port, stopbits=self.stop_sel, bytesize=self.bit_sel,
-                                           parity=self.parity_sel, baudrate=self.baud_sel, timeout=delay) #Modbus config
+					parity=self.parity_sel, baudrate=self.baud_sel, timeout=delay) #Modbus config
 			self.instrument.connect() # Connect
 			print("OK --> %s" % self.instrument.port)
 			if systemtype == 'rasp':
@@ -108,26 +108,26 @@ class modbus():
 		pass
 
 
-	'''#-----------------------------------------------------------------------------
-	# closes the modbus communication. 
+	#-----------------------------------------------------------------------------
+	# closes the modbus communication.
 	# ENTRIES:
 	# 	Nothing
-	# RETURNS: 
+	# RETURNS:
 	# 	Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def stop(self):
 		self.instrument.close() # closes the port
 		self.connected = 0
 		self.conect_error = 0
 
-	
-	'''#-----------------------------------------------------------------------------
+
+	#-----------------------------------------------------------------------------
 	# reads the value of a register.
 	# ENTRIES:
 	#   -register :register to read
-	# RETURNS: 
+	# RETURNS:
 	#   returns the register value or a communication error
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def read_register(self, register):
 		try:
 			print("Read holding register")
@@ -139,24 +139,24 @@ class modbus():
 			return "error"
 
 
-	'''#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
 	# reads a different registers
 	# ENTRIES:
 	#   -inicial_register : first register to read
 	#   -number_registrers   : Number of registers to read
-	# RETURNS: 
+	# RETURNS:
 	#    Returns a vector with the values of selected register or a communication error
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def read_registers(self, inicial_register, number_registrers):
 		try:
 			print("Read holding registers")
-			self.read_result = self.instrument.read_holding_registers(inicial_register, number_registrers, unit=self.direction_sel) # try to read 
+			self.read_result = self.instrument.read_holding_registers(inicial_register, number_registrers, unit=self.direction_sel) # try to read
 			print("Done")
 			return self.read_result.registers # Return the register read
 		except: # if it has an exception
 			self.read_result = "error"
 			return self.read_result # Returns erros to indicate an error comunication
-			
+
 # vbus class
 class VBus():
 	dbusservice = None	#dbus service variable
@@ -164,17 +164,17 @@ class VBus():
 	parser = ""	  	#add parser to put a serial port argument
 	args = ""		#extract parse argument
 	init_on = 0		#variable to init the vebus service
-	
-	'''#-----------------------------------------------------------------------------
-	# Initializes the different arguments to add. 
+
+	#-----------------------------------------------------------------------------
+	# Initializes the different arguments to add.
 	# ENTRIES:
 	#   Nothing
-	# RETURNS: 
+	# RETURNS:
 	#   Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def parser_arguments(self):
 		# Argument parsing
-		self.parser = argparse.ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)   
+		self.parser = argparse.ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)
 		self.parser.add_argument("-n", "--name", help="the D-Bus service you want me to claim",
 			                    type=str, default="com.windcharger.bornay_ttyUSB0")
 		self.parser.add_argument("-i", "--deviceinstance", help="the device instance you want me to be",
@@ -182,21 +182,22 @@ class VBus():
 		self.parser.add_argument("-d", "--debug", help="set logging level to debug",
 			                    action="store_true")
 		self.parser.add_argument('-s', '--serial', default='/dev/ttyUSB0')
-		
-		self.args = self.parser.parse_args() 
+
+		self.args = self.parser.parse_args()
 		print(self.args)
 		# Init logging
 		logging.basicConfig(level=(logging.DEBUG if self.args.debug else logging.INFO))
 		logging.info(__file__ + " is starting up")
 		logLevel = {0: 'NOTSET', 10: 'DEBUG', 20: 'INFO', 30: 'WARNING', 40: 'ERROR'}
-		logging.info('Loglevel set to ' + logLevel[logging.getLogger().getEffectiveLevel()])		
-	'''#-----------------------------------------------------------------------------
-	# Initializes the vbus protocol. 
+		logging.info('Loglevel set to ' + logLevel[logging.getLogger().getEffectiveLevel()])
+
+	#-----------------------------------------------------------------------------
+	# Initializes the vbus protocol.
 	# ENTRIES:
 	#   Nothing
-	# RETURNS: 
+	# RETURNS:
 	#   Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def Init(self):
 		try:
 			DBusGMainLoop(set_as_default=True)
@@ -207,21 +208,21 @@ class VBus():
 			print("Bornay wind+ has been created before")
 			self.__mandatory__()
 
-	'''#-----------------------------------------------------------------------------
+	#-----------------------------------------------------------------------------
 	# Registers the mandatory instances
 	# ENTRIES:
 	#   Nothing
-	# RETURNS: 
+	# RETURNS:
 	#   Nothing
-	#-----------------------------------------------------------------------------'''		
+	#-----------------------------------------------------------------------------
 	def __mandatory__(self):
 		try:
 			logging.info("using device instance 0")
 
 			# Create the management objects, as specified in the ccgx dbus-api document
 			self.dbusservice.add_path('/Management/ProcessName', __file__)
-			self.dbusservice.add_path('/Management/ProcessVersion', 'Unkown version, and running on Python ' + sys.version)
-			self.dbusservice.add_path('/Management/Connection', 'Data taken Bornay wind+ modbus')
+			self.dbusservice.add_path('/Management/ProcessVersion', 'Version {} running on Python {}'.format(softwareVersion, sys.version))
+			self.dbusservice.add_path('/Management/Connection', 'ModBus RTU')
 
 			# Create the mandatory objects
 			self.dbusservice.add_path('/DeviceInstance', 0)
@@ -233,14 +234,14 @@ class VBus():
 		except:
 			print("Mandatory Bornay wind+ has been created before")
 			self.__objects_dbus__()
-	
-	'''#-----------------------------------------------------------------------------
-	# Creates the different registers to save. 
+
+	#-----------------------------------------------------------------------------
+	# Creates the different registers to save.
 	# ENTRIES:
 	#   Nothing
-	# RETURNS: 
+	# RETURNS:
 	#   Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def __objects_dbus__(self):
 		try:
 			# Create all the objects that we want to export to the dbus
@@ -278,14 +279,14 @@ class VBus():
 			self.dbusservice.add_path('/Mppt/AbsortionTime', 0, writeable=True)
 		except:
 			print("Bornay wind+ objects has been created before")
-	
-	'''#-----------------------------------------------------------------------------
-	# Update the different registers to save in dbus. 
+
+	#-----------------------------------------------------------------------------
+	# Update the different registers to save in dbus.
 	# ENTRIES:
 	#   -modbus_values: Vector who contains the bornay modbus values
-	# RETURNS: 
+	# RETURNS:
 	#   Nothing
-	#-----------------------------------------------------------------------------'''
+	#-----------------------------------------------------------------------------
 	def update_modbus_values(self):
 		self.dbusservice['/Mppt/StatusMEF'] = self.value_modbus[0]
 		self.dbusservice['/Mppt/RefMEF'] = self.value_modbus[1]
@@ -321,10 +322,9 @@ class VBus():
 		pass
 
 
-'''
 # -----------------------------------------------------------------------------
 # Main module
-# -----------------------------------------------------------------------------'''
+# -----------------------------------------------------------------------------
 if __name__ == '__main__':
 	systemtype = system_type(ccgx_rasp[1]) #sets a ccgx system
 	#init the different class of the script
@@ -340,7 +340,7 @@ if __name__ == '__main__':
 	s.stop_sel = 1
 	s.delay = 1
 	#init bornay modbus
-	s.init(s.Port_sel, s.delay)	
+	s.init(s.Port_sel, s.delay)
 	#main loop
 	while 1:
 		if s.connected == 0 and s.conect_error <=2: #if the port is not connected, try another time to connect
