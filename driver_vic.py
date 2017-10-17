@@ -159,10 +159,11 @@ class modbus():
 
 # vbus class
 class VBus():
-	dbusservice = None	#dbus service variable
-	value_modbus = "" 	#values read from bornay wind+ modbus
-	args = ""		#extract parse argument
-	init_on = 0		#variable to init the vebus service
+	def __init__(self):
+		self.dbusservice = None	#dbus service variable
+		self.value_modbus = "" 	#values read from bornay wind+ modbus
+		self.args = ""		#extract parse argument
+		self.init_on = 0		#variable to init the vebus service
 
 	#-----------------------------------------------------------------------------
 	# Initializes the different arguments to add.
