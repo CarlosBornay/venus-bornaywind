@@ -69,17 +69,18 @@ def system_type(systype):
 
 # modbus class
 class modbus():
-	direction_sel = 1				# Id to connect
-	instrument = ""					# Object who inizialises the modbus communication
-	Port_sel =  "" 					# Serial port
-	baud_sel = 57600				# Port speed
-	bit_sel = 8					# Bits of the port
-	parity_sel = 'N'				# Parity of the port
-	stop_sel = 1					# Stop bits
-	read_result = ""				# Reading exit
-	delay = 1					# Delay between pols (in seconds)
-	connected = 0					# If the port is connected or not
-	conect_error = 0				# variable to controls the connection error
+	def __init__(self):
+		self.direction_sel = 1		# Id to connect
+		self.instrument = ""		# Object who inizialises the modbus communication
+		self.Port_sel =  "" 		# Serial port
+		self.baud_sel = 57600		# Port speed
+		self.bit_sel = 8			# Bits of the port
+		self.parity_sel = 'N'		# Parity of the port
+		self.stop_sel = 1			# Stop bits
+		self.read_result = ""		# Reading exit
+		self.delay = 1				# Delay between pols (in seconds)
+		self.connected = 0			# If the port is connected or not
+		self.connect_error = 0		# variable to controls the connection error
 
 
 	#-----------------------------------------------------------------------------
@@ -103,10 +104,8 @@ class modbus():
 			self.connected = 1
 		except:
 			sys.stderr.write("Error to open the port (%s)\n" % str(port)) # Except in error case
-			self.conect_error = self.conect_error + 1
+			self.connect_error = self.connect_error + 1
 			self.connected = 0
-		pass
-
 
 	#-----------------------------------------------------------------------------
 	# closes the modbus communication.
@@ -118,7 +117,7 @@ class modbus():
 	def stop(self):
 		self.instrument.close() # closes the port
 		self.connected = 0
-		self.conect_error = 0
+		self.connect_error = 0
 
 
 	#-----------------------------------------------------------------------------
@@ -318,7 +317,6 @@ class VBus():
 		self.dbusservice['/Turbine/StimatedWind'] = (value_modbus[28]/10)
 		self.dbusservice['/Flags/ChargedBattery'] = value_modbus[29]
 		self.dbusservice['/Mppt/AbsortionTime'] = value_modbus[30]
-		pass
 
 
 # -----------------------------------------------------------------------------
@@ -341,19 +339,19 @@ if __name__ == '__main__':
 	#init bornay modbus
 	s.init(s.Port_sel, s.delay)
 	#main loop
-	while 1:
-		if s.connected == 0 and s.conect_error <=2: #if the port is not connected, try another time to connect
+	while True:
+		if s.connected == 0 and s.connect_error <=2: #if the port is not connected, try another time to connect
 			s.init(s.Port_sel, s.delay)
-			if s.conect_error == 2: #if the error repeats one more time, stops the script
+			if s.connect_error == 2: #if the error repeats one more time, stops the script
 				s.stop()
 				sys.exit("Connection lost")
 		else:
 			s.read_result = s.read_registers(5000,31) #read modbus data
-			print("Exit %s with %d errors" % (s.read_result, s.conect_error))
+			print("Exit %s with %d errors" % (s.read_result, s.connect_error))
 			if s.read_result == "error":
-				s.conect_error = s.conect_error + 1
-				if s.conect_error == 2: #if we have a lot of errors, stops the script
-					s.conect_error = 0
+				s.connect_error = s.connect_error + 1
+				if s.connect_error == 2: #if we have a lot of errors, stops the script
+					s.connect_error = 0
 					s.connected = 0
 					s.stop()
 					sys.exit("Connection lost")
@@ -361,7 +359,7 @@ if __name__ == '__main__':
 				if ve.init_on == 0:
 					ve.Init() #init the vebus config and directories
 					ve.init_on = 1
-				s.conect_error = 0 #sets the error count to zero
+				s.connect_error = 0 #sets the error count to zero
 				value_modbus = s.read_result #transfer modbus data read to ve variable
 				ve.update_modbus_values(value_modbus)
 				mainloop = gobject.MainLoop()
