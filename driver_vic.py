@@ -62,7 +62,7 @@ class modbus():
 			self.instrument = ModbusClient(method='rtu', port=port, stopbits=self.stop_sel, bytesize=self.bit_sel,
 					parity=self.parity_sel, baudrate=self.baud_sel, timeout=delay) #Modbus config
 			self.instrument.connect() # Connect
-			print("OK --> %s" % self.instrument.port)
+			log.debug("OK --> %s" % self.instrument.port)
 			self.connected = 1
 		except:
 			sys.stderr.write("Error to open the port (%s)\n" % str(port)) # Except in error case
@@ -91,10 +91,10 @@ class modbus():
 	#-----------------------------------------------------------------------------
 	def read_register(self, register):
 		try:
-			print("Read holding register")
+			log.debug("Read holding register")
 			self.read_result = self.instrument.read_holding_registers(address=register, count=1, unit=self.direction_sel)
 			errors = 0
-			print("Readed")
+			log.debug("Readed")
 			return self.read_result.getRegister(0)
 		except:
 			return "error"
@@ -110,9 +110,9 @@ class modbus():
 	#-----------------------------------------------------------------------------
 	def read_registers(self, inicial_register, number_registrers):
 		try:
-			print("Read holding registers")
+			log.debug("Read holding registers")
 			self.read_result = self.instrument.read_holding_registers(inicial_register, number_registrers, unit=self.direction_sel) # try to read
-			print("Done")
+			log.debug("Done")
 			return self.read_result.registers # Return the register read
 		except: # if it has an exception
 			self.read_result = "error"
@@ -144,7 +144,7 @@ class VBus():
 		parser.add_argument('-s', '--serial', default='/dev/ttyUSB0')
 
 		self.args = parser.parse_args()
-		print(self.args)
+		log.info(self.args)
 		# Init logging
 		logging.basicConfig(level=(logging.DEBUG if self.args.debug else logging.INFO))
 		logging.info(__file__ + " is starting up")
@@ -164,7 +164,7 @@ class VBus():
 			self.__mandatory__()
 			self.__objects_dbus__()
 		except:
-			print("Bornay wind+ has been created before")
+			log.warn("Bornay wind+ has been created before")
 			self.__mandatory__()
 
 	#-----------------------------------------------------------------------------
@@ -191,7 +191,7 @@ class VBus():
 			self.dbusservice.add_path('/HardwareVersion', 1.01)
 			self.dbusservice.add_path('/Connected', 1)
 		except:
-			print("Mandatory Bornay wind+ has been created before")
+			log.warn("Mandatory Bornay wind+ has been created before")
 			self.__objects_dbus__()
 
 	#-----------------------------------------------------------------------------
@@ -237,7 +237,7 @@ class VBus():
 			self.dbusservice.add_path('/Flags/ChargedBattery', 0, writeable=True)
 			self.dbusservice.add_path('/Mppt/AbsortionTime', 0, writeable=True)
 		except:
-			print("Bornay wind+ objects has been created before")
+			log.warn("Bornay wind+ objects has been created before")
 
 	#-----------------------------------------------------------------------------
 	# Update the different registers to save in dbus.
@@ -307,7 +307,7 @@ if __name__ == '__main__':
 				sys.exit("Connection lost")
 		else:
 			s.read_result = s.read_registers(5000,31) #read modbus data
-			print("Exit %s with %d errors" % (s.read_result, s.connect_error))
+			log.error("Exit %s with %d errors" % (s.read_result, s.connect_error))
 			if s.read_result == "error":
 				s.connect_error = s.connect_error + 1
 				if s.connect_error == 2: #if we have a lot of errors, stops the script
