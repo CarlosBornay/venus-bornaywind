@@ -12,33 +12,15 @@
 #---------------------------------------------------------------------------------
 softwareVersion = '1.5.1'
 
-from dbus.mainloop.glib import DBusGMainLoop
 import time # Library to use delays
-import gobject
-from gobject import idle_add
-import dbus
-import dbus.service
-import argparse
-import inspect #import inspect library
-import pprint #import pprint library
+from argparse import ArgumentParser
 import os # Library to detect import libraries
 import sys # system command library
-
-#import the path of different libraries to use in modbus communication
-sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/pymodbus 1.3.2'))
-sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/six-1.10.0'))
-sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/importlib-1.0.4'))
-sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/pyserial-3.3'))
 import serial
 import serial.rs485
 
 #importing modbus complements for the rs485 communicaction
-from pymodbus.exceptions import ModbusException, ParameterException
-from pymodbus.pdu import ExceptionResponse, ModbusRequest
 from pymodbus.client.sync import ModbusSerialClient as ModbusClient# initialize a serial RTU client instance
-from pymodbus.transaction import ModbusRtuFramer
-from pymodbus.exceptions import  ConnectionException
-from pymodbus.exceptions import  NotImplementedException, ParameterException
 
 #logging library config
 import logging
@@ -50,19 +32,6 @@ log.setLevel(logging.DEBUG)
 # importing dbus complements
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/velib_python'))
 from vedbus import VeDbusService #VeDbusItemImportObject paths that are mandatory for services representing products
-
-#-----------------------------------------------------------------------------
-# Sets the type of system (CCGX or rasp) to get permissions
-# ENTRIES:
-# systype: an integer who sets the system type
-# RETURNS:
-# the type of system
-#-----------------------------------------------------------------------------
-def system_type(systype):
-	if systype == 0:
-		return 'ccgx'
-	else:
-		return 'rasp'
 
 # modbus class
 class modbus():
@@ -165,7 +134,7 @@ class VBus():
 	#-----------------------------------------------------------------------------
 	def parser_arguments(self):
 		# Argument parsing
-		parser = argparse.ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)
+		parser = ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)
 		parser.add_argument("-n", "--name", help="the D-Bus service you want me to claim",
 			                    type=str, default="com.windcharger.bornay_ttyUSB0")
 		parser.add_argument("-i", "--deviceinstance", help="the device instance you want me to be",
@@ -191,7 +160,6 @@ class VBus():
 	#-----------------------------------------------------------------------------
 	def Init(self):
 		try:
-			DBusGMainLoop(set_as_default=True)
 			self.dbusservice = VeDbusService('com.victronenergy.windcharger.bornay_ttyUSB0')
 			self.__mandatory__()
 			self.__objects_dbus__()
@@ -354,6 +322,4 @@ if __name__ == '__main__':
 				s.connect_error = 0 #sets the error count to zero
 				value_modbus = s.read_result #transfer modbus data read to ve variable
 				ve.update_modbus_values(value_modbus)
-				mainloop = gobject.MainLoop()
-				#mainloop.run()
 				time.sleep(s.delay) #delay to not collapse the dbus
