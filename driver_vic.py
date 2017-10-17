@@ -181,7 +181,7 @@ class VBus():
 			                    type=str, default="0")
 		self.parser.add_argument("-d", "--debug", help="set logging level to debug",
 			                    action="store_true")
-		self.parser.add_argument('-s', '--Bornay_serial', default='/dev/ttyUSB0') 		
+		self.parser.add_argument('-s', '--serial', default='/dev/ttyUSB0')
 		
 		self.args = self.parser.parse_args() 
 		print(self.args)
@@ -331,7 +331,7 @@ if __name__ == '__main__':
 	s = modbus() # starts modbus class
 	ve = VBus() #init vbus class
 	ve.parser_arguments() #saves the parser arguments
-	s.Port_sel = ve.args.Bornay_serial #gets the serial port argument
+	s.Port_sel = ve.args.serial #gets the serial port argument
 	#config the serial comunication
 	s.direction_sel = 1
 	s.baud_sel = 57600
