@@ -51,9 +51,6 @@ log.setLevel(logging.DEBUG)
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), './ext/velib_python'))
 from vedbus import VeDbusService #VeDbusItemImportObject paths that are mandatory for services representing products
 
-ccgx_rasp = (0,1) #0 for ccgx, 1 for rasp sets the system type
-systemtype = "" #determines the system operation
-
 #-----------------------------------------------------------------------------
 # Sets the type of system (CCGX or rasp) to get permissions
 # ENTRIES:
@@ -97,10 +94,6 @@ class modbus():
 					parity=self.parity_sel, baudrate=self.baud_sel, timeout=delay) #Modbus config
 			self.instrument.connect() # Connect
 			print("OK --> %s" % self.instrument.port)
-			if systemtype == 'rasp':
-				os.system("sudo chmod 666 %s" % port) # get permissions to open the port in a generic linux
-			else:
-				os.system("chmod a+rw %s" % port) # get permissions to open the port in a color control
 			self.connected = 1
 		except:
 			sys.stderr.write("Error to open the port (%s)\n" % str(port)) # Except in error case
@@ -323,7 +316,6 @@ class VBus():
 # Main module
 # -----------------------------------------------------------------------------
 if __name__ == '__main__':
-	systemtype = system_type(ccgx_rasp[1]) #sets a ccgx system
 	#init the different class of the script
 	s = modbus() # starts modbus class
 	ve = VBus() #init vbus class
