@@ -161,7 +161,6 @@ class modbus():
 class VBus():
 	dbusservice = None	#dbus service variable
 	value_modbus = "" 	#values read from bornay wind+ modbus
-	parser = ""	  	#add parser to put a serial port argument
 	args = ""		#extract parse argument
 	init_on = 0		#variable to init the vebus service
 
@@ -174,16 +173,16 @@ class VBus():
 	#-----------------------------------------------------------------------------
 	def parser_arguments(self):
 		# Argument parsing
-		self.parser = argparse.ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)
-		self.parser.add_argument("-n", "--name", help="the D-Bus service you want me to claim",
+		parser = argparse.ArgumentParser(description='Wind+ with CCGX monitoring', add_help=False)
+		parser.add_argument("-n", "--name", help="the D-Bus service you want me to claim",
 			                    type=str, default="com.windcharger.bornay_ttyUSB0")
-		self.parser.add_argument("-i", "--deviceinstance", help="the device instance you want me to be",
+		parser.add_argument("-i", "--deviceinstance", help="the device instance you want me to be",
 			                    type=str, default="0")
-		self.parser.add_argument("-d", "--debug", help="set logging level to debug",
+		parser.add_argument("-d", "--debug", help="set logging level to debug",
 			                    action="store_true")
-		self.parser.add_argument('-s', '--serial', default='/dev/ttyUSB0')
+		parser.add_argument('-s', '--serial', default='/dev/ttyUSB0')
 
-		self.args = self.parser.parse_args()
+		self.args = parser.parse_args()
 		print(self.args)
 		# Init logging
 		logging.basicConfig(level=(logging.DEBUG if self.args.debug else logging.INFO))
