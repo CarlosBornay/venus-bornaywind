@@ -46,9 +46,16 @@ Turbine:
 /WindSpeedLastHour      Calculated Wind speed last hour in m/s
 /WindSpeedLastMin       Calculated Wind speed last minute in m/s
 
-Note: Paths to show in Color Control
-/0/Current              Current in Amps. Value/10
-/0/Power                Power in watts 
-/0/Voltage              Voltage in volts. Value/10
+Note: 
+Paths to show in Color Control
+/0/Current              
+/0/Power                
+/0/Voltage             
 /RPM 
-/WindSpeed   (if t
+/WindSpeed   (if there are anemomemeter)
+
+Paths to adjust.
+/Stop                     Wind Turbine Brake 0=Run; 1=Stop Writable value. 
+Anemometer                yes/not --> Only If yes then windspeed is showed in color control
+
+
