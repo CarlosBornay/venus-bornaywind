@@ -14,7 +14,7 @@ Flags:
 /ElevatedVoltage        0=No; 1=Yes 
 /ElevatedWind           0=No; 1=Yes 
 /EmergencyButton        0=Off; 1=On Status of emergency button
-/Extrem                 0=No; 1=Yes 
+/Extrem                 0=No; 1=Yes flag to elevated speed
 /ExternSupply           0=No; 1=Yes Fail of extern supply
 
 History:
