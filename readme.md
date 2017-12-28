@@ -1,4 +1,4 @@
-Paths
+```Paths
 
 DC:
 
@@ -56,4 +56,4 @@ Paths to show in Color Control
 
 Paths to adjust.
 /Stop                     Wind Turbine Brake 0=Run; 1=Stop Writable value. 
-Anemometer                yes/not --> Only If yes then windspeed is showed in color control
+Anemometer                yes/not --> Only If yes then windspeed is showed in color control```
