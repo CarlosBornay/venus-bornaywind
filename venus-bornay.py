@@ -215,7 +215,7 @@ class VBus():
 			self.dbusservice.add_path('/Mppt/Phase', 0, writeable=True)
 			self.dbusservice.add_path('/Mppt/SinkTemp', 0, writeable=True)
 			self.dbusservice.add_path('/Mppt/BoxTemp', 0, writeable=True)
-			self.dbusservice.add_path('/Flags/ElevatedVoltaje', 0, writeable=True)
+			self.dbusservice.add_path('/Flags/ElevatedVoltage', 0, writeable=True)
 			self.dbusservice.add_path('/Flags/Extrem', 0, writeable=True)
 			self.dbusservice.add_path('/Flags/ExternSupply', 0, writeable=True)
 			self.dbusservice.add_path('/Flags/ElevatedWind', 0, writeable=True)
@@ -223,7 +223,7 @@ class VBus():
 			self.dbusservice.add_path('/Flags/EmergencyButton', 0, writeable=True)
 			self.dbusservice.add_path('/Turbine/RPM', 0, writeable=True)
 			self.dbusservice.add_path('/History/Overall/MaxRPM', 0, writeable=True)
-			self.dbusservice.add_path('/Mppt/Dutty', 0, writeable=True)
+			self.dbusservice.add_path('/Mppt/DuttyCycle', 0, writeable=True)
 			self.dbusservice.add_path('/Turbine/WindSpeed', 0, writeable=True)
 			self.dbusservice.add_path('/Turbine/VDC', 0, writeable=True)
 			self.dbusservice.add_path('/Dc/0/Current', 0, writeable=True)
@@ -233,7 +233,7 @@ class VBus():
 			self.dbusservice.add_path('/Turbine/Stop', 0, writeable=True)
 			self.dbusservice.add_path('/Dc/0/Voltage', 0, writeable=True)
 			self.dbusservice.add_path('/Mppt/ChargerState', 0, writeable=True)
-			self.dbusservice.add_path('/Turbine/StimatedWind', 0, writeable=True)
+			self.dbusservice.add_path('/Turbine/EstimatedWind', 0, writeable=True)
 			self.dbusservice.add_path('/Flags/ChargedBattery', 0, writeable=True)
 			self.dbusservice.add_path('/Mppt/AbsortionTime', 0, writeable=True)
 		except:
@@ -257,7 +257,7 @@ class VBus():
 		self.dbusservice['/Mppt/Phase'] = value_modbus[7]
 		self.dbusservice['/Mppt/SinkTemp'] = (value_modbus[8]/10)
 		self.dbusservice['/Mppt/BoxTemp'] = (value_modbus[9]/10)
-		self.dbusservice['/Flags/ElevatedVoltaje'] = value_modbus[10]
+		self.dbusservice['/Flags/ElevatedVoltage'] = value_modbus[10]
 		self.dbusservice['/Flags/Extrem'] = value_modbus[11]
 		self.dbusservice['/Flags/ExternSupply'] = value_modbus[12]
 		self.dbusservice['/Flags/ElevatedWind'] = value_modbus[13]
@@ -265,7 +265,7 @@ class VBus():
 		self.dbusservice['/Flags/EmergencyButton'] = value_modbus[15]
 		self.dbusservice['/Turbine/RPM'] = value_modbus[16]
 		self.dbusservice['/History/Overall/MaxRPM'] = value_modbus[17]
-		self.dbusservice['/Mppt/Dutty'] = value_modbus[18]
+		self.dbusservice['/Mppt/DuttyCycle'] = value_modbus[18]
 		self.dbusservice['/Turbine/WindSpeed'] = (value_modbus[19]/100)
 		self.dbusservice['/Turbine/VDC'] = (value_modbus[20]/10)
 		self.dbusservice['/Dc/0/Current'] = (value_modbus[21]/10)
@@ -275,7 +275,7 @@ class VBus():
 		self.dbusservice['/Turbine/Stop'] = value_modbus[25]
 		self.dbusservice['/Dc/0/Voltage'] = (value_modbus[26]/10)
 		self.dbusservice['/Mppt/ChargerState'] = value_modbus[27]
-		self.dbusservice['/Turbine/StimatedWind'] = (value_modbus[28]/10)
+		self.dbusservice['/Turbine/EstimatedWind'] = (value_modbus[28]/10)
 		self.dbusservice['/Flags/ChargedBattery'] = value_modbus[29]
 		self.dbusservice['/Mppt/AbsortionTime'] = value_modbus[30]
 
