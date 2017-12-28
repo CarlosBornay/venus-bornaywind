@@ -9,13 +9,13 @@ DC:
 
 Flags:
 
-/ChargedBattery         0=No; 1=Yes
-/FanState               0=Off; 1=On
-/ElevatedVoltage        0=No; 1=Yes
-/ElevatedWind           0=No; 1=Yes
-/EmergencyButton        0=Off; 1=On
-/Extrem                 0=No; 1=Yes
-/ExternSupply           0=No; 1=Yes
+/ChargedBattery         0=No; 1=Yes If the battery is charged sets this flag
+/FanState               0=Off; 1=On Status of the fan
+/ElevatedVoltage        0=No; 1=Yes 
+/ElevatedWind           0=No; 1=Yes 
+/EmergencyButton        0=Off; 1=On Status of emergency button
+/Extrem                 0=No; 1=Yes 
+/ExternSupply           0=No; 1=Yes Fail of extern supply
 
 History:
 
