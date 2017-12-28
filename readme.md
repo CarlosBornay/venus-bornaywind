@@ -11,7 +11,7 @@ Flags:
 
 /ChargedBattery         0=No; 1=Yes
 /FanState               0=Off; 1=On
-/ElevatedVoltaje        0=No; 1=Yes
+/ElevatedVoltage        0=No; 1=Yes
 /ElevatedWind           0=No; 1=Yes
 /EmergencyButton        0=Off; 1=On
 /Extrem                 0=No; 1=Yes
@@ -26,7 +26,7 @@ Mppt:
 /AbsortionTime          Time in absorbtion in seconds
 /BoxTemp                Temperature of the box in degrees /10
 /ChargerState           0=standby; 1=charging; 2=charged.
-/Dutty                  Dutty cycle 0 to 100%
+/DuttyCycle             Dutty cycle 0 to 100%
 /Phase                  Phase of Full-Bridge 0 to 100%
 /RefMEF                 Bat Power Reference in watts
 /SinkTemp               Temperature of sink in degrees /10
@@ -38,9 +38,9 @@ Turbine:
 /BatPowerLastHour       Calculated Batery Power charged last hour in watts.
 /BatPowerLastMin        Calculated Batery Power charged last minute in watts.
 /BreakerPowerLastMin    Calculated Braker Power derivated to resistors last minute in watts.
+/EstimatedWind           Wind speed estimated value/10
 /IBrk                   Current of the braker in Amps
 /RPM                    Revolutions of the turbine in revolutions per minute
-/StimatedWind           Wind speed estimated value/10
 /Stop                   Wind Turbine Brake 0=Run; 1=Stop Writable value. 
 /VDC                    Voltage of DC system in volts Value/10
 /WindSpeed              Wind speed (m/s) Value /100 
