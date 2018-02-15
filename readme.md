@@ -1,5 +1,4 @@
 ```
-Paths
 
 Hardware compatible:
 
@@ -12,6 +11,8 @@ Firmware:
 Adapters:
 
 - Bornay RS485 to USB adapter.
+
+Paths
 
 DC:
 
