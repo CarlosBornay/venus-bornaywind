@@ -26,7 +26,7 @@ Mppt:
 /AbsortionTime          Time in absorbtion in seconds
 /BoxTemp                Temperature of the box in degrees /10
 /ChargerState           0=standby; 1=charging; 2=charged.
-/DuttyCycle             Dutty cycle 0 to 100%
+/DutyCycle              Duty cycle 0 to 100%
 /Phase                  Phase of Full-Bridge 0 to 100%
 /RefMEF                 Bat Power Reference in watts
 /SinkTemp               Temperature of sink in degrees /10
