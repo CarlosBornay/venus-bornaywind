@@ -179,9 +179,9 @@ class VBus():
 			logging.info("using device instance 0")
 
 			# Create the management objects, as specified in the ccgx dbus-api document
-			self.dbusservice.add_path('/Management/ProcessName', __file__)
-			self.dbusservice.add_path('/Management/ProcessVersion', 'Version {} running on Python {}'.format(softwareVersion, sys.version))
-			self.dbusservice.add_path('/Management/Connection', 'ModBus RTU')
+			self.dbusservice.add_path('/Mgmt/ProcessName', __file__)
+			self.dbusservice.add_path('/Mgmt/ProcessVersion', 'Version {} running on Python {}'.format(softwareVersion, sys.version))
+			self.dbusservice.add_path('/Mgmt/Connection', 'ModBus RTU')
 
 			# Create the mandatory objects
 			self.dbusservice.add_path('/DeviceInstance', 0)
