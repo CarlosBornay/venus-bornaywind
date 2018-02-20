@@ -7,10 +7,10 @@
 # the Bornay aerogeneradores MPPT wind+.
 # Author: Carlos Reyes Guerola
 # date: 21/04/2017
-# last update: 05/10/2017
-# Version: 1.5.1
+# last update: 20/02/2018
+# Version: 1.5.2
 #---------------------------------------------------------------------------------
-softwareVersion = '1.5.1'
+softwareVersion = '1.5.2'
 
 import time # Library to use delays
 from argparse import ArgumentParser
