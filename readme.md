@@ -10,7 +10,7 @@ Firmware:
 
 Adapters:
 
-- Bornay RS485 to USB adapter.
+- Bornay USB cable.
 
 Paths
 
